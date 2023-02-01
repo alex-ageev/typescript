@@ -58,13 +58,44 @@ As propriedades model e wheels são readonly,
 o que significa que elas só podem ser definidas no construtor da classe.
 */
 class Car1 {
-	readonly model: string
-	readonly wheels: number = 4
+	//atributos da classe
+	public model: string // public readonly private static (sem instanciar a classe)
+	// só pode ser acedida dentro da propria classe
+	private wheels: number = 4
 
+	// primeira função que é envocada quando instanciamos a classe
 	constructor(model: string) {
 		this.model = model // só podemos definir dentro do construtor
 	}
+	// get para aceder ao Model
+	public getModel() {
+		return this.model;
+	}
+	// set para modificar o Model
+	public setModel(model: string) {
+		if (model != "Ferrari") {
+			this.model = model;
+		}
+	}
+	private buzinar() {
+		return "popo"
+	}
+	public buzinar2() {
+		return "pipi"
+	}
+	public info() {
+		return `Este carro tem modelo ${this.model} e tem ${this.wheels} rodas.`
+	}
 }
+const carro = new Car1("BMW")
+console.log(carro.getModel())
+carro.setModel("Ferrari")
+console.log(carro.getModel())
+carro.model = "Ferrari";
+// carro.wheels = 50;
+console.log(carro.getModel())
+//carro.buzinar(); // metodo privado não é possivel aceder de fora!!
+console.log(carro.info());
 
 /*
 Outra versão é uma forma mais elegante de escrever a classe,
@@ -86,7 +117,7 @@ class Animal {
 	*/
 	protected voice: string = ''
 
-	#idade: string = ''
+	private idade: string = ''
 
 	public color: string = 'black' // acedida a partir de qualquer código.
 
@@ -98,6 +129,7 @@ class Animal {
 		console.log('go go go')
 	}
 }
+
 
 /*
 método público setVoice que permite-nos alterar o valor da voice.
@@ -119,6 +151,7 @@ class Cat extends Animal {
 	public getVoice(): string {
 		return this.voice;
 	}
+
 	// não podemos envocar o método go()
 }
 
